@@ -1,3 +1,4 @@
+import re
 import sys
 import os
 import requests
@@ -29,7 +30,7 @@ class TextBrowser:
             self.site_parsing(user_input)
 
     def reading_file(self, user_input):
-        with open(f'.\\{self.dir_name}\\{user_input}') as fle:
+        with open(f'./{self.dir_name}/{user_input}') as fle:
             for line in fle:
                 print(line)
             self.history_stack.append(fle)
@@ -43,8 +44,11 @@ class TextBrowser:
             for i in soup.find_all("a"):
                 i.string = "".join([Fore.BLUE, i.get_text(), Fore.RESET])
             site_text = soup.get_text()
-            file_name = user_input[user_input.rfind("/"):user_input.rfind(".")]
-            with open(f'.\\{self.dir_name}\\{file_name}', 'w') as fle:
+            match = re.match(r"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?", user_input)
+            file_name = match.group(4)
+            print(file_name)
+            # print(os.listdir(os.getcwd()))
+            with open(f'./{self.dir_name}/{file_name}', 'w', encoding='utf-16') as fle:
                 fle.write(site_text)
             self.history_stack.append(site_text)
             print(site_text)
@@ -54,8 +58,8 @@ class TextBrowser:
     def back_button(self):
         if not self.history_stack:
             return
-        self.history_stack.pop()
-        print(self.history_stack.pop())
+        prev = self.history_stack.pop()
+        print(prev)
 
 
 if __name__ == "__main__":
