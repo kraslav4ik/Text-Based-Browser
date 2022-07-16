@@ -21,6 +21,9 @@ Launch tests:
 Text-Based-Browser/> python "./Text-Based Browser/tests/tests.py"
 ```
 
+Project made as a part of JetBrains Academy course
+
+
 Tests are provided by JetBrainsAcademy
 
 https://hyperskill.org/projects/79?track=2
